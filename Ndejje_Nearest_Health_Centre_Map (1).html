@@ -1,0 +1,2252 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_453ee91e4abf39e71813d780fe16bd9f {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+
+            <style>html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            </style>
+
+            <style>#map {
+                position:absolute;
+                top:0;
+                bottom:0;
+                right:0;
+                left:0;
+                }
+            </style>
+
+            <script>
+                L_NO_TOUCH = false;
+                L_DISABLE_3D = false;
+            </script>
+
+        
+</head>
+<body>
+    
+    
+<div style="
+    position: fixed;
+    bottom: 30px;
+    left: 30px;
+    z-index: 9999;
+    background-color: white;
+    border: 2px solid grey;
+    padding: 12px;
+    border-radius: 6px;
+    font-size: 13px;
+">
+    <b>Ndejje Nearest Facility Finder</b><br><br>
+
+    <span style="color:green;">●</span>
+    Hostels<br>
+
+    <span style="color:blue;">●</span>
+    Health Facilities<br>
+
+    <span style="color:red;">━━━━</span>
+    Nearest-facility connections
+</div>
+    
+<div style="
+    position: fixed;
+    bottom: 30px;
+    left: 30px;
+    z-index: 9999;
+    background-color: white;
+    border: 2px solid grey;
+    padding: 12px;
+    border-radius: 6px;
+    font-size: 13px;
+">
+    <b>Ndejje Nearest Facility Finder</b><br><br>
+
+    <span style="color:green;">●</span>
+    Hostels<br>
+
+    <span style="color:blue;">●</span>
+    Health Facilities<br>
+
+    <span style="color:red;">━━━━</span>
+    Nearest-facility connections
+</div>
+    
+            <div class="folium-map" id="map_453ee91e4abf39e71813d780fe16bd9f" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_453ee91e4abf39e71813d780fe16bd9f = L.map(
+                "map_453ee91e4abf39e71813d780fe16bd9f",
+                {
+                    center: [0.6032278518473347, 32.476575410236485],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 16,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+            L.control.scale().addTo(map_453ee91e4abf39e71813d780fe16bd9f);
+
+            
+
+        
+    
+            var tile_layer_e1d1cd806416ac5d7e170ab3f20c2067 = L.tileLayer(
+                "https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}",
+                {
+  "minZoom": 0,
+  "maxZoom": 18,
+  "maxNativeZoom": 18,
+  "noWrap": false,
+  "attribution": "Tiles \u00a9 Esri",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_e1d1cd806416ac5d7e170ab3f20c2067.addTo(map_453ee91e4abf39e71813d780fe16bd9f);
+        
+    
+            var tile_layer_42668e5222e11cc66427a3c28269fb7d = L.tileLayer(
+                "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 20,
+  "maxNativeZoom": 20,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"https://carto.com/attributions\"\u003eCARTO\u003c/a\u003e",
+  "subdomains": "abcd",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            var tile_layer_9c605bcf1258ca980e230259470fb62a = L.tileLayer(
+                "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+                {
+  "minZoom": 0,
+  "maxZoom": 18,
+  "maxNativeZoom": 18,
+  "noWrap": false,
+  "attribution": "Tiles \u00a9 Esri",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            var feature_group_e7845220f1e8ce40862474f2ae046df8 = L.featureGroup(
+                {
+}
+            );
+        
+    
+            var marker_549011f2875d2210b86e495cf8b1b217 = L.marker(
+                [0.6062550960529306, 32.47432194650173],
+                {
+}
+            ).addTo(feature_group_e7845220f1e8ce40862474f2ae046df8);
+        
+    
+            var icon_c3136529648e15d48fce51e86483097f = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "home",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_3b9824e1cba43bdba43045a1799718c0 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_932c6bdc249b06cc7e787d03476cff14 = $(`<div id="html_932c6bdc249b06cc7e787d03476cff14" style="width: 100.0%; height: 100.0%;">             <b>Hostel:</b> PT_1<br>             <b>Latitude:</b> 0.606255<br>             <b>Longitude:</b> 32.474322             </div>`)[0];
+                popup_3b9824e1cba43bdba43045a1799718c0.setContent(html_932c6bdc249b06cc7e787d03476cff14);
+            
+        
+
+        marker_549011f2875d2210b86e495cf8b1b217.bindPopup(popup_3b9824e1cba43bdba43045a1799718c0)
+        ;
+
+        
+    
+    
+            marker_549011f2875d2210b86e495cf8b1b217.bindTooltip(
+                `<div>
+                     Hostel: PT_1
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_549011f2875d2210b86e495cf8b1b217.setIcon(icon_c3136529648e15d48fce51e86483097f);
+            
+    
+            var marker_0ffedfc981c128e7b1094ac227f20f3e = L.marker(
+                [0.6073386477260381, 32.47119784355164],
+                {
+}
+            ).addTo(feature_group_e7845220f1e8ce40862474f2ae046df8);
+        
+    
+            var icon_cdbe2c2900f8e4f1b592d0daf5ba4b94 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "home",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_420e9774adb9e1cf3280ec05763ea170 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_9f9168c5635e0f5c535badaa110abe0e = $(`<div id="html_9f9168c5635e0f5c535badaa110abe0e" style="width: 100.0%; height: 100.0%;">             <b>Hostel:</b> PT_2 fundas<br>             <b>Latitude:</b> 0.607339<br>             <b>Longitude:</b> 32.471198             </div>`)[0];
+                popup_420e9774adb9e1cf3280ec05763ea170.setContent(html_9f9168c5635e0f5c535badaa110abe0e);
+            
+        
+
+        marker_0ffedfc981c128e7b1094ac227f20f3e.bindPopup(popup_420e9774adb9e1cf3280ec05763ea170)
+        ;
+
+        
+    
+    
+            marker_0ffedfc981c128e7b1094ac227f20f3e.bindTooltip(
+                `<div>
+                     Hostel: PT_2 fundas
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_0ffedfc981c128e7b1094ac227f20f3e.setIcon(icon_cdbe2c2900f8e4f1b592d0daf5ba4b94);
+            
+    
+            var marker_8a7481a7e07931b813eacb6ea06e6841 = L.marker(
+                [0.60277512355906, 32.47706986963749],
+                {
+}
+            ).addTo(feature_group_e7845220f1e8ce40862474f2ae046df8);
+        
+    
+            var icon_1f2b757f771d7c5254723dc32a618893 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "home",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_c1563fe519978405d7777c413e1d5ab2 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_d71354d4ea8318556a88a998047c73cb = $(`<div id="html_d71354d4ea8318556a88a998047c73cb" style="width: 100.0%; height: 100.0%;">             <b>Hostel:</b> PT_3 sophie<br>             <b>Latitude:</b> 0.602775<br>             <b>Longitude:</b> 32.477070             </div>`)[0];
+                popup_c1563fe519978405d7777c413e1d5ab2.setContent(html_d71354d4ea8318556a88a998047c73cb);
+            
+        
+
+        marker_8a7481a7e07931b813eacb6ea06e6841.bindPopup(popup_c1563fe519978405d7777c413e1d5ab2)
+        ;
+
+        
+    
+    
+            marker_8a7481a7e07931b813eacb6ea06e6841.bindTooltip(
+                `<div>
+                     Hostel: PT_3 sophie
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_8a7481a7e07931b813eacb6ea06e6841.setIcon(icon_1f2b757f771d7c5254723dc32a618893);
+            
+    
+            var marker_f661d4e4b5646cf46c3da1238e9da5d2 = L.marker(
+                [0.6038097283310415, 32.47754629701376],
+                {
+}
+            ).addTo(feature_group_e7845220f1e8ce40862474f2ae046df8);
+        
+    
+            var icon_04bb868855c880c6d7c53b742664ba5d = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "home",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_dd6c576dcfcd35f13b9c2e4bbb5ef1fe = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_8437019a5f494d303de627b5fa8818dd = $(`<div id="html_8437019a5f494d303de627b5fa8818dd" style="width: 100.0%; height: 100.0%;">             <b>Hostel:</b> PT_4 virgin hostel <br>             <b>Latitude:</b> 0.603810<br>             <b>Longitude:</b> 32.477546             </div>`)[0];
+                popup_dd6c576dcfcd35f13b9c2e4bbb5ef1fe.setContent(html_8437019a5f494d303de627b5fa8818dd);
+            
+        
+
+        marker_f661d4e4b5646cf46c3da1238e9da5d2.bindPopup(popup_dd6c576dcfcd35f13b9c2e4bbb5ef1fe)
+        ;
+
+        
+    
+    
+            marker_f661d4e4b5646cf46c3da1238e9da5d2.bindTooltip(
+                `<div>
+                     Hostel: PT_4 virgin hostel 
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_f661d4e4b5646cf46c3da1238e9da5d2.setIcon(icon_04bb868855c880c6d7c53b742664ba5d);
+            
+    
+            var marker_99ba82cb047ba0a78bfc85c483aec06e = L.marker(
+                [0.6043578743310495, 32.47710507363081],
+                {
+}
+            ).addTo(feature_group_e7845220f1e8ce40862474f2ae046df8);
+        
+    
+            var icon_1192db6232d269fb9b47e36744363858 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "home",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_23789cc696c8e4e266842686531251f2 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_f31a7a8d635f85b884cddf433526c18c = $(`<div id="html_f31a7a8d635f85b884cddf433526c18c" style="width: 100.0%; height: 100.0%;">             <b>Hostel:</b> PT_5 blue sheet<br>             <b>Latitude:</b> 0.604358<br>             <b>Longitude:</b> 32.477105             </div>`)[0];
+                popup_23789cc696c8e4e266842686531251f2.setContent(html_f31a7a8d635f85b884cddf433526c18c);
+            
+        
+
+        marker_99ba82cb047ba0a78bfc85c483aec06e.bindPopup(popup_23789cc696c8e4e266842686531251f2)
+        ;
+
+        
+    
+    
+            marker_99ba82cb047ba0a78bfc85c483aec06e.bindTooltip(
+                `<div>
+                     Hostel: PT_5 blue sheet
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_99ba82cb047ba0a78bfc85c483aec06e.setIcon(icon_1192db6232d269fb9b47e36744363858);
+            
+    
+            var marker_b2247ad29afbc6fd4836884635c1058d = L.marker(
+                [0.6015400345201208, 32.476755045354366],
+                {
+}
+            ).addTo(feature_group_e7845220f1e8ce40862474f2ae046df8);
+        
+    
+            var icon_e4e5227357467129e527ef8fb1a74105 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "home",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_d27a6d50e875f4e006a1be760626904f = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_afb7a59c017728a0d6321ec9e0ce245d = $(`<div id="html_afb7a59c017728a0d6321ec9e0ce245d" style="width: 100.0%; height: 100.0%;">             <b>Hostel:</b> PT_6 william courts hostel <br>             <b>Latitude:</b> 0.601540<br>             <b>Longitude:</b> 32.476755             </div>`)[0];
+                popup_d27a6d50e875f4e006a1be760626904f.setContent(html_afb7a59c017728a0d6321ec9e0ce245d);
+            
+        
+
+        marker_b2247ad29afbc6fd4836884635c1058d.bindPopup(popup_d27a6d50e875f4e006a1be760626904f)
+        ;
+
+        
+    
+    
+            marker_b2247ad29afbc6fd4836884635c1058d.bindTooltip(
+                `<div>
+                     Hostel: PT_6 william courts hostel 
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_b2247ad29afbc6fd4836884635c1058d.setIcon(icon_e4e5227357467129e527ef8fb1a74105);
+            
+    
+            var marker_879bde9631f5cc42804defe6344b2f1c = L.marker(
+                [0.6004464239596655, 32.477282769978046],
+                {
+}
+            ).addTo(feature_group_e7845220f1e8ce40862474f2ae046df8);
+        
+    
+            var icon_03c229e985fad3a4426e577da739cecb = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "home",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_b468deff61eeaabb4b5c9a87022cca8a = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_a388ba888844ef7d4f5d72f6392a4849 = $(`<div id="html_a388ba888844ef7d4f5d72f6392a4849" style="width: 100.0%; height: 100.0%;">             <b>Hostel:</b> PT_ elpah hostel <br>             <b>Latitude:</b> 0.600446<br>             <b>Longitude:</b> 32.477283             </div>`)[0];
+                popup_b468deff61eeaabb4b5c9a87022cca8a.setContent(html_a388ba888844ef7d4f5d72f6392a4849);
+            
+        
+
+        marker_879bde9631f5cc42804defe6344b2f1c.bindPopup(popup_b468deff61eeaabb4b5c9a87022cca8a)
+        ;
+
+        
+    
+    
+            marker_879bde9631f5cc42804defe6344b2f1c.bindTooltip(
+                `<div>
+                     Hostel: PT_ elpah hostel 
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_879bde9631f5cc42804defe6344b2f1c.setIcon(icon_03c229e985fad3a4426e577da739cecb);
+            
+    
+            var marker_34636223a512f2f88236ce6b9f2367b4 = L.marker(
+                [0.6005523653969257, 32.47470818459988],
+                {
+}
+            ).addTo(feature_group_e7845220f1e8ce40862474f2ae046df8);
+        
+    
+            var icon_315db3f55a8da3a7fdc27f409780b8f4 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "home",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_ec64410d39cd8491da7202ca6407bbe9 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_f1246a6bf14983cd6e42a472456c806c = $(`<div id="html_f1246a6bf14983cd6e42a472456c806c" style="width: 100.0%; height: 100.0%;">             <b>Hostel:</b> PT_ white flat<br>             <b>Latitude:</b> 0.600552<br>             <b>Longitude:</b> 32.474708             </div>`)[0];
+                popup_ec64410d39cd8491da7202ca6407bbe9.setContent(html_f1246a6bf14983cd6e42a472456c806c);
+            
+        
+
+        marker_34636223a512f2f88236ce6b9f2367b4.bindPopup(popup_ec64410d39cd8491da7202ca6407bbe9)
+        ;
+
+        
+    
+    
+            marker_34636223a512f2f88236ce6b9f2367b4.bindTooltip(
+                `<div>
+                     Hostel: PT_ white flat
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_34636223a512f2f88236ce6b9f2367b4.setIcon(icon_315db3f55a8da3a7fdc27f409780b8f4);
+            
+    
+            var marker_a4d21a35d440155c00dba9b8bf339f21 = L.marker(
+                [0.6004987241631276, 32.47780244797468],
+                {
+}
+            ).addTo(feature_group_e7845220f1e8ce40862474f2ae046df8);
+        
+    
+            var icon_b956eea3471d45baaeeb9e7c799d9b66 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "home",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_f9283e2fd80228298b62a028c4a45696 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_19841508706567ddb1a8aadd73a9c6d9 = $(`<div id="html_19841508706567ddb1a8aadd73a9c6d9" style="width: 100.0%; height: 100.0%;">             <b>Hostel:</b> PT_ kampton hostels<br>             <b>Latitude:</b> 0.600499<br>             <b>Longitude:</b> 32.477802             </div>`)[0];
+                popup_f9283e2fd80228298b62a028c4a45696.setContent(html_19841508706567ddb1a8aadd73a9c6d9);
+            
+        
+
+        marker_a4d21a35d440155c00dba9b8bf339f21.bindPopup(popup_f9283e2fd80228298b62a028c4a45696)
+        ;
+
+        
+    
+    
+            marker_a4d21a35d440155c00dba9b8bf339f21.bindTooltip(
+                `<div>
+                     Hostel: PT_ kampton hostels
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_a4d21a35d440155c00dba9b8bf339f21.setIcon(icon_b956eea3471d45baaeeb9e7c799d9b66);
+            
+    
+            var marker_6ca411103e79d3f2bc173b7d0b8d2555 = L.marker(
+                [0.6011977364497916, 32.47950665652752],
+                {
+}
+            ).addTo(feature_group_e7845220f1e8ce40862474f2ae046df8);
+        
+    
+            var icon_5d585f7403689de3c6fbce6f7a994c2a = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "home",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_12197e1a80df5727c5e0880149587ce9 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_b109666f0b37decf04efe404be170a40 = $(`<div id="html_b109666f0b37decf04efe404be170a40" style="width: 100.0%; height: 100.0%;">             <b>Hostel:</b> PT_Nova<br>             <b>Latitude:</b> 0.601198<br>             <b>Longitude:</b> 32.479507             </div>`)[0];
+                popup_12197e1a80df5727c5e0880149587ce9.setContent(html_b109666f0b37decf04efe404be170a40);
+            
+        
+
+        marker_6ca411103e79d3f2bc173b7d0b8d2555.bindPopup(popup_12197e1a80df5727c5e0880149587ce9)
+        ;
+
+        
+    
+    
+            marker_6ca411103e79d3f2bc173b7d0b8d2555.bindTooltip(
+                `<div>
+                     Hostel: PT_Nova
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_6ca411103e79d3f2bc173b7d0b8d2555.setIcon(icon_5d585f7403689de3c6fbce6f7a994c2a);
+            
+    
+            var marker_00b883760892ac810561279590c9da25 = L.marker(
+                [0.5998852025141392, 32.47985132038593],
+                {
+}
+            ).addTo(feature_group_e7845220f1e8ce40862474f2ae046df8);
+        
+    
+            var icon_10dc46a2b9342f2883169db470d736cd = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "home",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_29a618e5fd5696b8cb9e66d06a5f3e53 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_b4abc7daf6c27672ee1d6e124840e41d = $(`<div id="html_b4abc7daf6c27672ee1d6e124840e41d" style="width: 100.0%; height: 100.0%;">             <b>Hostel:</b> PT_ Victoria hostel <br>             <b>Latitude:</b> 0.599885<br>             <b>Longitude:</b> 32.479851             </div>`)[0];
+                popup_29a618e5fd5696b8cb9e66d06a5f3e53.setContent(html_b4abc7daf6c27672ee1d6e124840e41d);
+            
+        
+
+        marker_00b883760892ac810561279590c9da25.bindPopup(popup_29a618e5fd5696b8cb9e66d06a5f3e53)
+        ;
+
+        
+    
+    
+            marker_00b883760892ac810561279590c9da25.bindTooltip(
+                `<div>
+                     Hostel: PT_ Victoria hostel 
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_00b883760892ac810561279590c9da25.setIcon(icon_10dc46a2b9342f2883169db470d736cd);
+            
+    
+            var marker_69f7f51ed8e556a14aa2cbfcb94fbbe5 = L.marker(
+                [0.5999116878763645, 32.47981209307909],
+                {
+}
+            ).addTo(feature_group_e7845220f1e8ce40862474f2ae046df8);
+        
+    
+            var icon_3e34f52d3e2bb3d718c59ed767c9a44f = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "home",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_fa7511866348732448a6a967e10e8a3e = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_6411329d9e4fa3037448a7a9be14916a = $(`<div id="html_6411329d9e4fa3037448a7a9be14916a" style="width: 100.0%; height: 100.0%;">             <b>Hostel:</b> PT_ city hostels<br>             <b>Latitude:</b> 0.599912<br>             <b>Longitude:</b> 32.479812             </div>`)[0];
+                popup_fa7511866348732448a6a967e10e8a3e.setContent(html_6411329d9e4fa3037448a7a9be14916a);
+            
+        
+
+        marker_69f7f51ed8e556a14aa2cbfcb94fbbe5.bindPopup(popup_fa7511866348732448a6a967e10e8a3e)
+        ;
+
+        
+    
+    
+            marker_69f7f51ed8e556a14aa2cbfcb94fbbe5.bindTooltip(
+                `<div>
+                     Hostel: PT_ city hostels
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_69f7f51ed8e556a14aa2cbfcb94fbbe5.setIcon(icon_3e34f52d3e2bb3d718c59ed767c9a44f);
+            
+    
+            feature_group_e7845220f1e8ce40862474f2ae046df8.addTo(map_453ee91e4abf39e71813d780fe16bd9f);
+        
+    
+            var feature_group_1494c6cca6741e5482dd19756b93679a = L.featureGroup(
+                {
+}
+            );
+        
+    
+            var marker_08016a4d205afae5feed6cc7bec1a9dd = L.marker(
+                [0.6072467872275251, 32.47587997466326],
+                {
+}
+            ).addTo(feature_group_1494c6cca6741e5482dd19756b93679a);
+        
+    
+            var icon_190fd2f3c224b8c50697d29f858880ab = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "plus-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_ded81c01cd43826ccec9e801ad4ccb97 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_b262eaf048fb3d6eb2238c836af345b7 = $(`<div id="html_b262eaf048fb3d6eb2238c836af345b7" style="width: 100.0%; height: 100.0%;">             <b>Health Facility:</b> Iml clinic <br>             <b>Latitude:</b> 0.607247<br>             <b>Longitude:</b> 32.475880             </div>`)[0];
+                popup_ded81c01cd43826ccec9e801ad4ccb97.setContent(html_b262eaf048fb3d6eb2238c836af345b7);
+            
+        
+
+        marker_08016a4d205afae5feed6cc7bec1a9dd.bindPopup(popup_ded81c01cd43826ccec9e801ad4ccb97)
+        ;
+
+        
+    
+    
+            marker_08016a4d205afae5feed6cc7bec1a9dd.bindTooltip(
+                `<div>
+                     Health Facility: Iml clinic 
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_08016a4d205afae5feed6cc7bec1a9dd.setIcon(icon_190fd2f3c224b8c50697d29f858880ab);
+            
+    
+            var marker_d601642385ba18314a5b26f66330744b = L.marker(
+                [0.6065916944300642, 32.47586656361818],
+                {
+}
+            ).addTo(feature_group_1494c6cca6741e5482dd19756b93679a);
+        
+    
+            var icon_a83666badc92496250faf4b7d256ce0c = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "plus-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_bb9f9dc69d6e5ae74f79a14fe681add9 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_7f67dd18fb49b9f352641c40a4ff7659 = $(`<div id="html_7f67dd18fb49b9f352641c40a4ff7659" style="width: 100.0%; height: 100.0%;">             <b>Health Facility:</b> PT_Ndejje arch disp<br>             <b>Latitude:</b> 0.606592<br>             <b>Longitude:</b> 32.475867             </div>`)[0];
+                popup_bb9f9dc69d6e5ae74f79a14fe681add9.setContent(html_7f67dd18fb49b9f352641c40a4ff7659);
+            
+        
+
+        marker_d601642385ba18314a5b26f66330744b.bindPopup(popup_bb9f9dc69d6e5ae74f79a14fe681add9)
+        ;
+
+        
+    
+    
+            marker_d601642385ba18314a5b26f66330744b.bindTooltip(
+                `<div>
+                     Health Facility: PT_Ndejje arch disp
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_d601642385ba18314a5b26f66330744b.setIcon(icon_a83666badc92496250faf4b7d256ce0c);
+            
+    
+            var marker_f0973fd33ba9c88887b94333dee986d3 = L.marker(
+                [0.605325092061563, 32.47583840042353],
+                {
+}
+            ).addTo(feature_group_1494c6cca6741e5482dd19756b93679a);
+        
+    
+            var icon_dd4840cfe6039641ba69464766bab994 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "plus-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_7066fd78bf02ed116d124bfc2844d964 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_237e6680d4e5262ef7fc064ef2575db1 = $(`<div id="html_237e6680d4e5262ef7fc064ef2575db1" style="width: 100.0%; height: 100.0%;">             <b>Health Facility:</b> PT_Thereza drug shop<br>             <b>Latitude:</b> 0.605325<br>             <b>Longitude:</b> 32.475838             </div>`)[0];
+                popup_7066fd78bf02ed116d124bfc2844d964.setContent(html_237e6680d4e5262ef7fc064ef2575db1);
+            
+        
+
+        marker_f0973fd33ba9c88887b94333dee986d3.bindPopup(popup_7066fd78bf02ed116d124bfc2844d964)
+        ;
+
+        
+    
+    
+            marker_f0973fd33ba9c88887b94333dee986d3.bindTooltip(
+                `<div>
+                     Health Facility: PT_Thereza drug shop
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_f0973fd33ba9c88887b94333dee986d3.setIcon(icon_dd4840cfe6039641ba69464766bab994);
+            
+    
+            var marker_b5901ef6290b186b464c76aeb8df3023 = L.marker(
+                [0.6036900413989127, 32.476106621325016],
+                {
+}
+            ).addTo(feature_group_1494c6cca6741e5482dd19756b93679a);
+        
+    
+            var icon_1f04b40914ddae0bcebe3749df540ebe = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "plus-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_8ccff014316d5acc08f7f1de655a6a0e = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_c4e32e01cff1366cf26e42197e9f720c = $(`<div id="html_c4e32e01cff1366cf26e42197e9f720c" style="width: 100.0%; height: 100.0%;">             <b>Health Facility:</b> PT_Ndejje  drug shop<br>             <b>Latitude:</b> 0.603690<br>             <b>Longitude:</b> 32.476107             </div>`)[0];
+                popup_8ccff014316d5acc08f7f1de655a6a0e.setContent(html_c4e32e01cff1366cf26e42197e9f720c);
+            
+        
+
+        marker_b5901ef6290b186b464c76aeb8df3023.bindPopup(popup_8ccff014316d5acc08f7f1de655a6a0e)
+        ;
+
+        
+    
+    
+            marker_b5901ef6290b186b464c76aeb8df3023.bindTooltip(
+                `<div>
+                     Health Facility: PT_Ndejje  drug shop
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_b5901ef6290b186b464c76aeb8df3023.setIcon(icon_1f04b40914ddae0bcebe3749df540ebe);
+            
+    
+            var marker_91811f7345bfe85fb5c9ca8d1e3e5cba = L.marker(
+                [0.6034865400825035, 32.47615825384855],
+                {
+}
+            ).addTo(feature_group_1494c6cca6741e5482dd19756b93679a);
+        
+    
+            var icon_2b6c55c056be26cd8b0f1dea6863954f = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "plus-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_6f78ccedfc0f89f41e5f32d85c90693c = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_d5c0590b48aa3cbe5a7583b3b70f5119 = $(`<div id="html_d5c0590b48aa3cbe5a7583b3b70f5119" style="width: 100.0%; height: 100.0%;">             <b>Health Facility:</b> PT_volacare phamarcy<br>             <b>Latitude:</b> 0.603487<br>             <b>Longitude:</b> 32.476158             </div>`)[0];
+                popup_6f78ccedfc0f89f41e5f32d85c90693c.setContent(html_d5c0590b48aa3cbe5a7583b3b70f5119);
+            
+        
+
+        marker_91811f7345bfe85fb5c9ca8d1e3e5cba.bindPopup(popup_6f78ccedfc0f89f41e5f32d85c90693c)
+        ;
+
+        
+    
+    
+            marker_91811f7345bfe85fb5c9ca8d1e3e5cba.bindTooltip(
+                `<div>
+                     Health Facility: PT_volacare phamarcy
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_91811f7345bfe85fb5c9ca8d1e3e5cba.setIcon(icon_2b6c55c056be26cd8b0f1dea6863954f);
+            
+    
+            var marker_836adf1e1a33f0716f7691c3d41281b4 = L.marker(
+                [0.6029249836921275, 32.47600503265858],
+                {
+}
+            ).addTo(feature_group_1494c6cca6741e5482dd19756b93679a);
+        
+    
+            var icon_d54434ee7b14fb5b68bedc973ba99de7 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "plus-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_2e84503c2adbeaee612d678868b13727 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_8e930f6e35f37940684b9097d848f2bc = $(`<div id="html_8e930f6e35f37940684b9097d848f2bc" style="width: 100.0%; height: 100.0%;">             <b>Health Facility:</b> PT_joan drug shop<br>             <b>Latitude:</b> 0.602925<br>             <b>Longitude:</b> 32.476005             </div>`)[0];
+                popup_2e84503c2adbeaee612d678868b13727.setContent(html_8e930f6e35f37940684b9097d848f2bc);
+            
+        
+
+        marker_836adf1e1a33f0716f7691c3d41281b4.bindPopup(popup_2e84503c2adbeaee612d678868b13727)
+        ;
+
+        
+    
+    
+            marker_836adf1e1a33f0716f7691c3d41281b4.bindTooltip(
+                `<div>
+                     Health Facility: PT_joan drug shop
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_836adf1e1a33f0716f7691c3d41281b4.setIcon(icon_d54434ee7b14fb5b68bedc973ba99de7);
+            
+    
+            var marker_25c8bad74f43f436467701287c81538a = L.marker(
+                [0.6026567776344945, 32.47592322528362],
+                {
+}
+            ).addTo(feature_group_1494c6cca6741e5482dd19756b93679a);
+        
+    
+            var icon_74fe5701acb8c75baaccf53d42a0ae35 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "plus-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_afdf12fe28eee5bb3e767910e233307e = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_2b5d8ee01c52cb741f8cc4b83e6ef02d = $(`<div id="html_2b5d8ee01c52cb741f8cc4b83e6ef02d" style="width: 100.0%; height: 100.0%;">             <b>Health Facility:</b> PT_igemero drug shop<br>             <b>Latitude:</b> 0.602657<br>             <b>Longitude:</b> 32.475923             </div>`)[0];
+                popup_afdf12fe28eee5bb3e767910e233307e.setContent(html_2b5d8ee01c52cb741f8cc4b83e6ef02d);
+            
+        
+
+        marker_25c8bad74f43f436467701287c81538a.bindPopup(popup_afdf12fe28eee5bb3e767910e233307e)
+        ;
+
+        
+    
+    
+            marker_25c8bad74f43f436467701287c81538a.bindTooltip(
+                `<div>
+                     Health Facility: PT_igemero drug shop
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_25c8bad74f43f436467701287c81538a.setIcon(icon_74fe5701acb8c75baaccf53d42a0ae35);
+            
+    
+            var marker_c03201b20e7b8948c7f87cdb540f5443 = L.marker(
+                [0.6026681763922175, 32.47573345899582],
+                {
+}
+            ).addTo(feature_group_1494c6cca6741e5482dd19756b93679a);
+        
+    
+            var icon_9ab401eaf71e29a46a872aa8eb1ab501 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "plus-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_10fe341f985015a643f22da6cab3b608 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_9a9706c45fe7f919911eb847aec8cb04 = $(`<div id="html_9a9706c45fe7f919911eb847aec8cb04" style="width: 100.0%; height: 100.0%;">             <b>Health Facility:</b> PT_divine drug shop<br>             <b>Latitude:</b> 0.602668<br>             <b>Longitude:</b> 32.475733             </div>`)[0];
+                popup_10fe341f985015a643f22da6cab3b608.setContent(html_9a9706c45fe7f919911eb847aec8cb04);
+            
+        
+
+        marker_c03201b20e7b8948c7f87cdb540f5443.bindPopup(popup_10fe341f985015a643f22da6cab3b608)
+        ;
+
+        
+    
+    
+            marker_c03201b20e7b8948c7f87cdb540f5443.bindTooltip(
+                `<div>
+                     Health Facility: PT_divine drug shop
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_c03201b20e7b8948c7f87cdb540f5443.setIcon(icon_9ab401eaf71e29a46a872aa8eb1ab501);
+            
+    
+            var marker_ee560af1d7a7c3b434d52443a7811781 = L.marker(
+                [0.601783431567839, 32.475246638059616],
+                {
+}
+            ).addTo(feature_group_1494c6cca6741e5482dd19756b93679a);
+        
+    
+            var icon_8419e8d14c3bf30d726e8f38cf678d29 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "plus-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_282d375d27287c477108747b49ad6ef1 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_175e82c31a6bc41c2c109130b577b5b9 = $(`<div id="html_175e82c31a6bc41c2c109130b577b5b9" style="width: 100.0%; height: 100.0%;">             <b>Health Facility:</b> PT_Gods will drug shop<br>             <b>Latitude:</b> 0.601783<br>             <b>Longitude:</b> 32.475247             </div>`)[0];
+                popup_282d375d27287c477108747b49ad6ef1.setContent(html_175e82c31a6bc41c2c109130b577b5b9);
+            
+        
+
+        marker_ee560af1d7a7c3b434d52443a7811781.bindPopup(popup_282d375d27287c477108747b49ad6ef1)
+        ;
+
+        
+    
+    
+            marker_ee560af1d7a7c3b434d52443a7811781.bindTooltip(
+                `<div>
+                     Health Facility: PT_Gods will drug shop
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_ee560af1d7a7c3b434d52443a7811781.setIcon(icon_8419e8d14c3bf30d726e8f38cf678d29);
+            
+    
+            var marker_6c79e3a97c2dfca2ab468961ae195c12 = L.marker(
+                [0.6006016482800165, 32.47577335685492],
+                {
+}
+            ).addTo(feature_group_1494c6cca6741e5482dd19756b93679a);
+        
+    
+            var icon_231d4d3253793d759e06bcdee40326fe = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "plus-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_c168207fd819184a9a9ac3cf36d6b02e = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_0d37b0279644ced13f869ed8e762bc56 = $(`<div id="html_0d37b0279644ced13f869ed8e762bc56" style="width: 100.0%; height: 100.0%;">             <b>Health Facility:</b> PT_kamelas medical Centre <br>             <b>Latitude:</b> 0.600602<br>             <b>Longitude:</b> 32.475773             </div>`)[0];
+                popup_c168207fd819184a9a9ac3cf36d6b02e.setContent(html_0d37b0279644ced13f869ed8e762bc56);
+            
+        
+
+        marker_6c79e3a97c2dfca2ab468961ae195c12.bindPopup(popup_c168207fd819184a9a9ac3cf36d6b02e)
+        ;
+
+        
+    
+    
+            marker_6c79e3a97c2dfca2ab468961ae195c12.bindTooltip(
+                `<div>
+                     Health Facility: PT_kamelas medical Centre 
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_6c79e3a97c2dfca2ab468961ae195c12.setIcon(icon_231d4d3253793d759e06bcdee40326fe);
+            
+    
+            var marker_18aeaff6711eede540755beed9da1547 = L.marker(
+                [0.6086967748411813, 32.47974336147308],
+                {
+}
+            ).addTo(feature_group_1494c6cca6741e5482dd19756b93679a);
+        
+    
+            var icon_41d6447da6f34d8f11ee9e17440a6f17 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "plus-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_b22def0480b32388f66536fb9f26c8d7 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_ae29708317c9aab2e5f63576393fafb9 = $(`<div id="html_ae29708317c9aab2e5f63576393fafb9" style="width: 100.0%; height: 100.0%;">             <b>Health Facility:</b> PT_Ndejje health center<br>             <b>Latitude:</b> 0.608697<br>             <b>Longitude:</b> 32.479743             </div>`)[0];
+                popup_b22def0480b32388f66536fb9f26c8d7.setContent(html_ae29708317c9aab2e5f63576393fafb9);
+            
+        
+
+        marker_18aeaff6711eede540755beed9da1547.bindPopup(popup_b22def0480b32388f66536fb9f26c8d7)
+        ;
+
+        
+    
+    
+            marker_18aeaff6711eede540755beed9da1547.bindTooltip(
+                `<div>
+                     Health Facility: PT_Ndejje health center
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_18aeaff6711eede540755beed9da1547.setIcon(icon_41d6447da6f34d8f11ee9e17440a6f17);
+            
+    
+            feature_group_1494c6cca6741e5482dd19756b93679a.addTo(map_453ee91e4abf39e71813d780fe16bd9f);
+        
+    
+            var feature_group_b605515f3cd86a284450ccb87dcadd81 = L.featureGroup(
+                {
+}
+            );
+        
+    
+            var poly_line_cfd40c75ae79b67920b3cdcf01af5ce3 = L.polyline(
+                [[0.6062550960529306, 32.47432194650173], [0.6065916944300642, 32.47586656361818]],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "red", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.8, "smoothFactor": 1.0, "stroke": true, "weight": 3}
+            ).addTo(feature_group_b605515f3cd86a284450ccb87dcadd81);
+        
+    
+        var popup_24fab92b40d0712b6df2880130e74b10 = L.popup({
+  "maxWidth": 350,
+});
+
+        
+            
+                var html_781173521d4ca4021a14b36932d8ea50 = $(`<div id="html_781173521d4ca4021a14b36932d8ea50" style="width: 100.0%; height: 100.0%;">     <b>Hostel:</b> PT_1<br>     <b>Nearest Health Centre:</b>     PT_Ndejje arch disp<br>     <b>Distance:</b>     0.176 km     </div>`)[0];
+                popup_24fab92b40d0712b6df2880130e74b10.setContent(html_781173521d4ca4021a14b36932d8ea50);
+            
+        
+
+        poly_line_cfd40c75ae79b67920b3cdcf01af5ce3.bindPopup(popup_24fab92b40d0712b6df2880130e74b10)
+        ;
+
+        
+    
+    
+            poly_line_cfd40c75ae79b67920b3cdcf01af5ce3.bindTooltip(
+                `<div>
+                     PT_1 → PT_Ndejje arch disp: 0.176 km
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_b6355c2901011c69f666d38ae25a5263 = L.polyline(
+                [[0.6073386477260381, 32.47119784355164], [0.6072467872275251, 32.47587997466326]],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "red", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.8, "smoothFactor": 1.0, "stroke": true, "weight": 3}
+            ).addTo(feature_group_b605515f3cd86a284450ccb87dcadd81);
+        
+    
+        var popup_9cf62a71891be6013028e1c9c843426f = L.popup({
+  "maxWidth": 350,
+});
+
+        
+            
+                var html_ee0bd0222388ec87013dacf257dc229c = $(`<div id="html_ee0bd0222388ec87013dacf257dc229c" style="width: 100.0%; height: 100.0%;">     <b>Hostel:</b> PT_2 fundas<br>     <b>Nearest Health Centre:</b>     Iml clinic <br>     <b>Distance:</b>     0.521 km     </div>`)[0];
+                popup_9cf62a71891be6013028e1c9c843426f.setContent(html_ee0bd0222388ec87013dacf257dc229c);
+            
+        
+
+        poly_line_b6355c2901011c69f666d38ae25a5263.bindPopup(popup_9cf62a71891be6013028e1c9c843426f)
+        ;
+
+        
+    
+    
+            poly_line_b6355c2901011c69f666d38ae25a5263.bindTooltip(
+                `<div>
+                     PT_2 fundas → Iml clinic : 0.521 km
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_bfe5801cbb6a7036a81caa04c2f0cbc3 = L.polyline(
+                [[0.60277512355906, 32.47706986963749], [0.6029249836921275, 32.47600503265858]],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "red", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.8, "smoothFactor": 1.0, "stroke": true, "weight": 3}
+            ).addTo(feature_group_b605515f3cd86a284450ccb87dcadd81);
+        
+    
+        var popup_0d65061d0b186ebc42466930a8bfc09c = L.popup({
+  "maxWidth": 350,
+});
+
+        
+            
+                var html_96c8403387db262e4d7fb018e0cd5aff = $(`<div id="html_96c8403387db262e4d7fb018e0cd5aff" style="width: 100.0%; height: 100.0%;">     <b>Hostel:</b> PT_3 sophie<br>     <b>Nearest Health Centre:</b>     PT_joan drug shop<br>     <b>Distance:</b>     0.120 km     </div>`)[0];
+                popup_0d65061d0b186ebc42466930a8bfc09c.setContent(html_96c8403387db262e4d7fb018e0cd5aff);
+            
+        
+
+        poly_line_bfe5801cbb6a7036a81caa04c2f0cbc3.bindPopup(popup_0d65061d0b186ebc42466930a8bfc09c)
+        ;
+
+        
+    
+    
+            poly_line_bfe5801cbb6a7036a81caa04c2f0cbc3.bindTooltip(
+                `<div>
+                     PT_3 sophie → PT_joan drug shop: 0.120 km
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_1dbafe902405fcc77b9a891d29f3aad4 = L.polyline(
+                [[0.6038097283310415, 32.47754629701376], [0.6034865400825035, 32.47615825384855]],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "red", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.8, "smoothFactor": 1.0, "stroke": true, "weight": 3}
+            ).addTo(feature_group_b605515f3cd86a284450ccb87dcadd81);
+        
+    
+        var popup_78ee906e240d7d9c0f956c75b3b8ad98 = L.popup({
+  "maxWidth": 350,
+});
+
+        
+            
+                var html_27743a5e3fc911b9a87015253db9d905 = $(`<div id="html_27743a5e3fc911b9a87015253db9d905" style="width: 100.0%; height: 100.0%;">     <b>Hostel:</b> PT_4 virgin hostel <br>     <b>Nearest Health Centre:</b>     PT_volacare phamarcy<br>     <b>Distance:</b>     0.159 km     </div>`)[0];
+                popup_78ee906e240d7d9c0f956c75b3b8ad98.setContent(html_27743a5e3fc911b9a87015253db9d905);
+            
+        
+
+        poly_line_1dbafe902405fcc77b9a891d29f3aad4.bindPopup(popup_78ee906e240d7d9c0f956c75b3b8ad98)
+        ;
+
+        
+    
+    
+            poly_line_1dbafe902405fcc77b9a891d29f3aad4.bindTooltip(
+                `<div>
+                     PT_4 virgin hostel  → PT_volacare phamarcy: 0.159 km
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_134cdecc898fe72417b8460fd692c079 = L.polyline(
+                [[0.6043578743310495, 32.47710507363081], [0.6036900413989127, 32.476106621325016]],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "red", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.8, "smoothFactor": 1.0, "stroke": true, "weight": 3}
+            ).addTo(feature_group_b605515f3cd86a284450ccb87dcadd81);
+        
+    
+        var popup_54245e6c1de5ae56a68a98aa1a85c99a = L.popup({
+  "maxWidth": 350,
+});
+
+        
+            
+                var html_b0abedea175a97e523a6892084a67915 = $(`<div id="html_b0abedea175a97e523a6892084a67915" style="width: 100.0%; height: 100.0%;">     <b>Hostel:</b> PT_5 blue sheet<br>     <b>Nearest Health Centre:</b>     PT_Ndejje  drug shop<br>     <b>Distance:</b>     0.133 km     </div>`)[0];
+                popup_54245e6c1de5ae56a68a98aa1a85c99a.setContent(html_b0abedea175a97e523a6892084a67915);
+            
+        
+
+        poly_line_134cdecc898fe72417b8460fd692c079.bindPopup(popup_54245e6c1de5ae56a68a98aa1a85c99a)
+        ;
+
+        
+    
+    
+            poly_line_134cdecc898fe72417b8460fd692c079.bindTooltip(
+                `<div>
+                     PT_5 blue sheet → PT_Ndejje  drug shop: 0.133 km
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_614fd627dc1c2ec17f0837aa831aed6b = L.polyline(
+                [[0.6015400345201208, 32.476755045354366], [0.6006016482800165, 32.47577335685492]],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "red", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.8, "smoothFactor": 1.0, "stroke": true, "weight": 3}
+            ).addTo(feature_group_b605515f3cd86a284450ccb87dcadd81);
+        
+    
+        var popup_0a9fbc0c0a7b353a4f5def86d5f9ce35 = L.popup({
+  "maxWidth": 350,
+});
+
+        
+            
+                var html_32db735a2d3f5007fb425924ca461cc6 = $(`<div id="html_32db735a2d3f5007fb425924ca461cc6" style="width: 100.0%; height: 100.0%;">     <b>Hostel:</b> PT_6 william courts hostel <br>     <b>Nearest Health Centre:</b>     PT_kamelas medical Centre <br>     <b>Distance:</b>     0.151 km     </div>`)[0];
+                popup_0a9fbc0c0a7b353a4f5def86d5f9ce35.setContent(html_32db735a2d3f5007fb425924ca461cc6);
+            
+        
+
+        poly_line_614fd627dc1c2ec17f0837aa831aed6b.bindPopup(popup_0a9fbc0c0a7b353a4f5def86d5f9ce35)
+        ;
+
+        
+    
+    
+            poly_line_614fd627dc1c2ec17f0837aa831aed6b.bindTooltip(
+                `<div>
+                     PT_6 william courts hostel  → PT_kamelas medical Centre : 0.151 km
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_9a21eb98f557860f86f34bb0f51fb11c = L.polyline(
+                [[0.6004464239596655, 32.477282769978046], [0.6006016482800165, 32.47577335685492]],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "red", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.8, "smoothFactor": 1.0, "stroke": true, "weight": 3}
+            ).addTo(feature_group_b605515f3cd86a284450ccb87dcadd81);
+        
+    
+        var popup_6a0518f91ca841137f47a3590aec00de = L.popup({
+  "maxWidth": 350,
+});
+
+        
+            
+                var html_1e716cf9cfb20526438224cac83d9f22 = $(`<div id="html_1e716cf9cfb20526438224cac83d9f22" style="width: 100.0%; height: 100.0%;">     <b>Hostel:</b> PT_ elpah hostel <br>     <b>Nearest Health Centre:</b>     PT_kamelas medical Centre <br>     <b>Distance:</b>     0.169 km     </div>`)[0];
+                popup_6a0518f91ca841137f47a3590aec00de.setContent(html_1e716cf9cfb20526438224cac83d9f22);
+            
+        
+
+        poly_line_9a21eb98f557860f86f34bb0f51fb11c.bindPopup(popup_6a0518f91ca841137f47a3590aec00de)
+        ;
+
+        
+    
+    
+            poly_line_9a21eb98f557860f86f34bb0f51fb11c.bindTooltip(
+                `<div>
+                     PT_ elpah hostel  → PT_kamelas medical Centre : 0.169 km
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_22250000e482f985fe6092777a37d78d = L.polyline(
+                [[0.6005523653969257, 32.47470818459988], [0.6006016482800165, 32.47577335685492]],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "red", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.8, "smoothFactor": 1.0, "stroke": true, "weight": 3}
+            ).addTo(feature_group_b605515f3cd86a284450ccb87dcadd81);
+        
+    
+        var popup_64f0fa434f085e52ab63044e45865003 = L.popup({
+  "maxWidth": 350,
+});
+
+        
+            
+                var html_4cc718b33f72a3059a62edf239b0faf2 = $(`<div id="html_4cc718b33f72a3059a62edf239b0faf2" style="width: 100.0%; height: 100.0%;">     <b>Hostel:</b> PT_ white flat<br>     <b>Nearest Health Centre:</b>     PT_kamelas medical Centre <br>     <b>Distance:</b>     0.119 km     </div>`)[0];
+                popup_64f0fa434f085e52ab63044e45865003.setContent(html_4cc718b33f72a3059a62edf239b0faf2);
+            
+        
+
+        poly_line_22250000e482f985fe6092777a37d78d.bindPopup(popup_64f0fa434f085e52ab63044e45865003)
+        ;
+
+        
+    
+    
+            poly_line_22250000e482f985fe6092777a37d78d.bindTooltip(
+                `<div>
+                     PT_ white flat → PT_kamelas medical Centre : 0.119 km
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_f570361489b3f014a55b43306f0d548f = L.polyline(
+                [[0.6004987241631276, 32.47780244797468], [0.6006016482800165, 32.47577335685492]],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "red", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.8, "smoothFactor": 1.0, "stroke": true, "weight": 3}
+            ).addTo(feature_group_b605515f3cd86a284450ccb87dcadd81);
+        
+    
+        var popup_51731a4cb57b426104686289b8954528 = L.popup({
+  "maxWidth": 350,
+});
+
+        
+            
+                var html_d0567d91dbb402122809d1e0c9e8c5c3 = $(`<div id="html_d0567d91dbb402122809d1e0c9e8c5c3" style="width: 100.0%; height: 100.0%;">     <b>Hostel:</b> PT_ kampton hostels<br>     <b>Nearest Health Centre:</b>     PT_kamelas medical Centre <br>     <b>Distance:</b>     0.226 km     </div>`)[0];
+                popup_51731a4cb57b426104686289b8954528.setContent(html_d0567d91dbb402122809d1e0c9e8c5c3);
+            
+        
+
+        poly_line_f570361489b3f014a55b43306f0d548f.bindPopup(popup_51731a4cb57b426104686289b8954528)
+        ;
+
+        
+    
+    
+            poly_line_f570361489b3f014a55b43306f0d548f.bindTooltip(
+                `<div>
+                     PT_ kampton hostels → PT_kamelas medical Centre : 0.226 km
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_a5d60c884a2da7ea9110bdaccee9d30b = L.polyline(
+                [[0.6011977364497916, 32.47950665652752], [0.6006016482800165, 32.47577335685492]],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "red", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.8, "smoothFactor": 1.0, "stroke": true, "weight": 3}
+            ).addTo(feature_group_b605515f3cd86a284450ccb87dcadd81);
+        
+    
+        var popup_de2ce63a98edd594a1163e2852ffef89 = L.popup({
+  "maxWidth": 350,
+});
+
+        
+            
+                var html_6e0ff3af9a81d036ab3d72ac9f1e9405 = $(`<div id="html_6e0ff3af9a81d036ab3d72ac9f1e9405" style="width: 100.0%; height: 100.0%;">     <b>Hostel:</b> PT_Nova<br>     <b>Nearest Health Centre:</b>     PT_kamelas medical Centre <br>     <b>Distance:</b>     0.421 km     </div>`)[0];
+                popup_de2ce63a98edd594a1163e2852ffef89.setContent(html_6e0ff3af9a81d036ab3d72ac9f1e9405);
+            
+        
+
+        poly_line_a5d60c884a2da7ea9110bdaccee9d30b.bindPopup(popup_de2ce63a98edd594a1163e2852ffef89)
+        ;
+
+        
+    
+    
+            poly_line_a5d60c884a2da7ea9110bdaccee9d30b.bindTooltip(
+                `<div>
+                     PT_Nova → PT_kamelas medical Centre : 0.421 km
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_e2828b539c99fecc2d23f314e6b35f3d = L.polyline(
+                [[0.5998852025141392, 32.47985132038593], [0.6006016482800165, 32.47577335685492]],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "red", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.8, "smoothFactor": 1.0, "stroke": true, "weight": 3}
+            ).addTo(feature_group_b605515f3cd86a284450ccb87dcadd81);
+        
+    
+        var popup_76da3d579b0d285712540f3eacaa6657 = L.popup({
+  "maxWidth": 350,
+});
+
+        
+            
+                var html_f3dbff466d85671eaccc6c5eea40141b = $(`<div id="html_f3dbff466d85671eaccc6c5eea40141b" style="width: 100.0%; height: 100.0%;">     <b>Hostel:</b> PT_ Victoria hostel <br>     <b>Nearest Health Centre:</b>     PT_kamelas medical Centre <br>     <b>Distance:</b>     0.461 km     </div>`)[0];
+                popup_76da3d579b0d285712540f3eacaa6657.setContent(html_f3dbff466d85671eaccc6c5eea40141b);
+            
+        
+
+        poly_line_e2828b539c99fecc2d23f314e6b35f3d.bindPopup(popup_76da3d579b0d285712540f3eacaa6657)
+        ;
+
+        
+    
+    
+            poly_line_e2828b539c99fecc2d23f314e6b35f3d.bindTooltip(
+                `<div>
+                     PT_ Victoria hostel  → PT_kamelas medical Centre : 0.461 km
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_f75eab42270845688cd06c1e1179a784 = L.polyline(
+                [[0.5999116878763645, 32.47981209307909], [0.6006016482800165, 32.47577335685492]],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "red", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.8, "smoothFactor": 1.0, "stroke": true, "weight": 3}
+            ).addTo(feature_group_b605515f3cd86a284450ccb87dcadd81);
+        
+    
+        var popup_13fb3ce2bff3d0a9e06f998d19e5c3de = L.popup({
+  "maxWidth": 350,
+});
+
+        
+            
+                var html_2848f509e3c38b455a9c76d13e65bd55 = $(`<div id="html_2848f509e3c38b455a9c76d13e65bd55" style="width: 100.0%; height: 100.0%;">     <b>Hostel:</b> PT_ city hostels<br>     <b>Nearest Health Centre:</b>     PT_kamelas medical Centre <br>     <b>Distance:</b>     0.456 km     </div>`)[0];
+                popup_13fb3ce2bff3d0a9e06f998d19e5c3de.setContent(html_2848f509e3c38b455a9c76d13e65bd55);
+            
+        
+
+        poly_line_f75eab42270845688cd06c1e1179a784.bindPopup(popup_13fb3ce2bff3d0a9e06f998d19e5c3de)
+        ;
+
+        
+    
+    
+            poly_line_f75eab42270845688cd06c1e1179a784.bindTooltip(
+                `<div>
+                     PT_ city hostels → PT_kamelas medical Centre : 0.456 km
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            feature_group_b605515f3cd86a284450ccb87dcadd81.addTo(map_453ee91e4abf39e71813d780fe16bd9f);
+        
+    
+            var feature_group_e60b988edf29c5ca6c77a1a3c4ae4c85 = L.featureGroup(
+                {
+}
+            );
+        
+    
+            var poly_line_d046bd40f2566257f7dd3cd9d974c583 = L.polyline(
+                [[0.6062550960529306, 32.47432194650173], [0.6065916944300642, 32.47586656361818]],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "red", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.8, "smoothFactor": 1.0, "stroke": true, "weight": 3}
+            ).addTo(feature_group_e60b988edf29c5ca6c77a1a3c4ae4c85);
+        
+    
+        var popup_8d99ff3b78dd6239cb5532e0ced2d567 = L.popup({
+  "maxWidth": 350,
+});
+
+        
+            
+                var html_caaf5e13038160e1d465d746bc2c365f = $(`<div id="html_caaf5e13038160e1d465d746bc2c365f" style="width: 100.0%; height: 100.0%;">     <b>Hostel:</b> PT_1<br>     <b>Nearest Health Centre:</b>     PT_Ndejje arch disp<br>     <b>Distance:</b>     0.176 km     </div>`)[0];
+                popup_8d99ff3b78dd6239cb5532e0ced2d567.setContent(html_caaf5e13038160e1d465d746bc2c365f);
+            
+        
+
+        poly_line_d046bd40f2566257f7dd3cd9d974c583.bindPopup(popup_8d99ff3b78dd6239cb5532e0ced2d567)
+        ;
+
+        
+    
+    
+            poly_line_d046bd40f2566257f7dd3cd9d974c583.bindTooltip(
+                `<div>
+                     PT_1 → PT_Ndejje arch disp: 0.176 km
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_d66f18fcd72ca6e25e13acb4f859cbd8 = L.polyline(
+                [[0.6073386477260381, 32.47119784355164], [0.6072467872275251, 32.47587997466326]],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "red", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.8, "smoothFactor": 1.0, "stroke": true, "weight": 3}
+            ).addTo(feature_group_e60b988edf29c5ca6c77a1a3c4ae4c85);
+        
+    
+        var popup_97b2ee8ab8067e3d38117d1f46af0a5d = L.popup({
+  "maxWidth": 350,
+});
+
+        
+            
+                var html_23f93fa13208dd5dc86b5026bc070ae9 = $(`<div id="html_23f93fa13208dd5dc86b5026bc070ae9" style="width: 100.0%; height: 100.0%;">     <b>Hostel:</b> PT_2 fundas<br>     <b>Nearest Health Centre:</b>     Iml clinic <br>     <b>Distance:</b>     0.521 km     </div>`)[0];
+                popup_97b2ee8ab8067e3d38117d1f46af0a5d.setContent(html_23f93fa13208dd5dc86b5026bc070ae9);
+            
+        
+
+        poly_line_d66f18fcd72ca6e25e13acb4f859cbd8.bindPopup(popup_97b2ee8ab8067e3d38117d1f46af0a5d)
+        ;
+
+        
+    
+    
+            poly_line_d66f18fcd72ca6e25e13acb4f859cbd8.bindTooltip(
+                `<div>
+                     PT_2 fundas → Iml clinic : 0.521 km
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_59f66b47770cfb886826d81d92d01916 = L.polyline(
+                [[0.60277512355906, 32.47706986963749], [0.6029249836921275, 32.47600503265858]],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "red", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.8, "smoothFactor": 1.0, "stroke": true, "weight": 3}
+            ).addTo(feature_group_e60b988edf29c5ca6c77a1a3c4ae4c85);
+        
+    
+        var popup_84265fcd73136fe5458bd0ef1035cdbd = L.popup({
+  "maxWidth": 350,
+});
+
+        
+            
+                var html_cef38755b23cf33e1cfb16b4f9ffb586 = $(`<div id="html_cef38755b23cf33e1cfb16b4f9ffb586" style="width: 100.0%; height: 100.0%;">     <b>Hostel:</b> PT_3 sophie<br>     <b>Nearest Health Centre:</b>     PT_joan drug shop<br>     <b>Distance:</b>     0.120 km     </div>`)[0];
+                popup_84265fcd73136fe5458bd0ef1035cdbd.setContent(html_cef38755b23cf33e1cfb16b4f9ffb586);
+            
+        
+
+        poly_line_59f66b47770cfb886826d81d92d01916.bindPopup(popup_84265fcd73136fe5458bd0ef1035cdbd)
+        ;
+
+        
+    
+    
+            poly_line_59f66b47770cfb886826d81d92d01916.bindTooltip(
+                `<div>
+                     PT_3 sophie → PT_joan drug shop: 0.120 km
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_d6526052506d0279b69dface46fe235d = L.polyline(
+                [[0.6038097283310415, 32.47754629701376], [0.6034865400825035, 32.47615825384855]],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "red", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.8, "smoothFactor": 1.0, "stroke": true, "weight": 3}
+            ).addTo(feature_group_e60b988edf29c5ca6c77a1a3c4ae4c85);
+        
+    
+        var popup_c0785b9df4ec79e1b1d727cf5bff79bd = L.popup({
+  "maxWidth": 350,
+});
+
+        
+            
+                var html_9da01ef47177948c3b59ff146d33abdb = $(`<div id="html_9da01ef47177948c3b59ff146d33abdb" style="width: 100.0%; height: 100.0%;">     <b>Hostel:</b> PT_4 virgin hostel <br>     <b>Nearest Health Centre:</b>     PT_volacare phamarcy<br>     <b>Distance:</b>     0.159 km     </div>`)[0];
+                popup_c0785b9df4ec79e1b1d727cf5bff79bd.setContent(html_9da01ef47177948c3b59ff146d33abdb);
+            
+        
+
+        poly_line_d6526052506d0279b69dface46fe235d.bindPopup(popup_c0785b9df4ec79e1b1d727cf5bff79bd)
+        ;
+
+        
+    
+    
+            poly_line_d6526052506d0279b69dface46fe235d.bindTooltip(
+                `<div>
+                     PT_4 virgin hostel  → PT_volacare phamarcy: 0.159 km
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_4e05dc1f26299d370e247c063743ec3c = L.polyline(
+                [[0.6043578743310495, 32.47710507363081], [0.6036900413989127, 32.476106621325016]],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "red", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.8, "smoothFactor": 1.0, "stroke": true, "weight": 3}
+            ).addTo(feature_group_e60b988edf29c5ca6c77a1a3c4ae4c85);
+        
+    
+        var popup_50b802537d798d3ef681c1f406247059 = L.popup({
+  "maxWidth": 350,
+});
+
+        
+            
+                var html_e57072915a6bd7d3cf4ff778deb56a95 = $(`<div id="html_e57072915a6bd7d3cf4ff778deb56a95" style="width: 100.0%; height: 100.0%;">     <b>Hostel:</b> PT_5 blue sheet<br>     <b>Nearest Health Centre:</b>     PT_Ndejje  drug shop<br>     <b>Distance:</b>     0.133 km     </div>`)[0];
+                popup_50b802537d798d3ef681c1f406247059.setContent(html_e57072915a6bd7d3cf4ff778deb56a95);
+            
+        
+
+        poly_line_4e05dc1f26299d370e247c063743ec3c.bindPopup(popup_50b802537d798d3ef681c1f406247059)
+        ;
+
+        
+    
+    
+            poly_line_4e05dc1f26299d370e247c063743ec3c.bindTooltip(
+                `<div>
+                     PT_5 blue sheet → PT_Ndejje  drug shop: 0.133 km
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_38241e3a243a84d3ee6e8e800f0f0976 = L.polyline(
+                [[0.6015400345201208, 32.476755045354366], [0.6006016482800165, 32.47577335685492]],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "red", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.8, "smoothFactor": 1.0, "stroke": true, "weight": 3}
+            ).addTo(feature_group_e60b988edf29c5ca6c77a1a3c4ae4c85);
+        
+    
+        var popup_7a530e3070c9dcff271cb18edd02bc0a = L.popup({
+  "maxWidth": 350,
+});
+
+        
+            
+                var html_7c7d36dc2695650b30add95c721675c6 = $(`<div id="html_7c7d36dc2695650b30add95c721675c6" style="width: 100.0%; height: 100.0%;">     <b>Hostel:</b> PT_6 william courts hostel <br>     <b>Nearest Health Centre:</b>     PT_kamelas medical Centre <br>     <b>Distance:</b>     0.151 km     </div>`)[0];
+                popup_7a530e3070c9dcff271cb18edd02bc0a.setContent(html_7c7d36dc2695650b30add95c721675c6);
+            
+        
+
+        poly_line_38241e3a243a84d3ee6e8e800f0f0976.bindPopup(popup_7a530e3070c9dcff271cb18edd02bc0a)
+        ;
+
+        
+    
+    
+            poly_line_38241e3a243a84d3ee6e8e800f0f0976.bindTooltip(
+                `<div>
+                     PT_6 william courts hostel  → PT_kamelas medical Centre : 0.151 km
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_e511d5b4933f1ef86ca31a64a9c5c22d = L.polyline(
+                [[0.6004464239596655, 32.477282769978046], [0.6006016482800165, 32.47577335685492]],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "red", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.8, "smoothFactor": 1.0, "stroke": true, "weight": 3}
+            ).addTo(feature_group_e60b988edf29c5ca6c77a1a3c4ae4c85);
+        
+    
+        var popup_87b833d135b5f419ed505bfc8b953d61 = L.popup({
+  "maxWidth": 350,
+});
+
+        
+            
+                var html_be55defa2716e137b4054969b9ca6cb1 = $(`<div id="html_be55defa2716e137b4054969b9ca6cb1" style="width: 100.0%; height: 100.0%;">     <b>Hostel:</b> PT_ elpah hostel <br>     <b>Nearest Health Centre:</b>     PT_kamelas medical Centre <br>     <b>Distance:</b>     0.169 km     </div>`)[0];
+                popup_87b833d135b5f419ed505bfc8b953d61.setContent(html_be55defa2716e137b4054969b9ca6cb1);
+            
+        
+
+        poly_line_e511d5b4933f1ef86ca31a64a9c5c22d.bindPopup(popup_87b833d135b5f419ed505bfc8b953d61)
+        ;
+
+        
+    
+    
+            poly_line_e511d5b4933f1ef86ca31a64a9c5c22d.bindTooltip(
+                `<div>
+                     PT_ elpah hostel  → PT_kamelas medical Centre : 0.169 km
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_344edd821c65e49117460faa89f67f7e = L.polyline(
+                [[0.6005523653969257, 32.47470818459988], [0.6006016482800165, 32.47577335685492]],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "red", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.8, "smoothFactor": 1.0, "stroke": true, "weight": 3}
+            ).addTo(feature_group_e60b988edf29c5ca6c77a1a3c4ae4c85);
+        
+    
+        var popup_956811d831cd435e918da543f7e7cf32 = L.popup({
+  "maxWidth": 350,
+});
+
+        
+            
+                var html_7485686c823d50d24efdf3fa5813c82f = $(`<div id="html_7485686c823d50d24efdf3fa5813c82f" style="width: 100.0%; height: 100.0%;">     <b>Hostel:</b> PT_ white flat<br>     <b>Nearest Health Centre:</b>     PT_kamelas medical Centre <br>     <b>Distance:</b>     0.119 km     </div>`)[0];
+                popup_956811d831cd435e918da543f7e7cf32.setContent(html_7485686c823d50d24efdf3fa5813c82f);
+            
+        
+
+        poly_line_344edd821c65e49117460faa89f67f7e.bindPopup(popup_956811d831cd435e918da543f7e7cf32)
+        ;
+
+        
+    
+    
+            poly_line_344edd821c65e49117460faa89f67f7e.bindTooltip(
+                `<div>
+                     PT_ white flat → PT_kamelas medical Centre : 0.119 km
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_5cb7593ebd309633271921b961d3f445 = L.polyline(
+                [[0.6004987241631276, 32.47780244797468], [0.6006016482800165, 32.47577335685492]],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "red", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.8, "smoothFactor": 1.0, "stroke": true, "weight": 3}
+            ).addTo(feature_group_e60b988edf29c5ca6c77a1a3c4ae4c85);
+        
+    
+        var popup_c28ee196932e49d5384f785a5751d4d3 = L.popup({
+  "maxWidth": 350,
+});
+
+        
+            
+                var html_ff4081881e48a0816b593a833ac5321d = $(`<div id="html_ff4081881e48a0816b593a833ac5321d" style="width: 100.0%; height: 100.0%;">     <b>Hostel:</b> PT_ kampton hostels<br>     <b>Nearest Health Centre:</b>     PT_kamelas medical Centre <br>     <b>Distance:</b>     0.226 km     </div>`)[0];
+                popup_c28ee196932e49d5384f785a5751d4d3.setContent(html_ff4081881e48a0816b593a833ac5321d);
+            
+        
+
+        poly_line_5cb7593ebd309633271921b961d3f445.bindPopup(popup_c28ee196932e49d5384f785a5751d4d3)
+        ;
+
+        
+    
+    
+            poly_line_5cb7593ebd309633271921b961d3f445.bindTooltip(
+                `<div>
+                     PT_ kampton hostels → PT_kamelas medical Centre : 0.226 km
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_51f464807a98431c5a6be9509c1af1b7 = L.polyline(
+                [[0.6011977364497916, 32.47950665652752], [0.6006016482800165, 32.47577335685492]],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "red", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.8, "smoothFactor": 1.0, "stroke": true, "weight": 3}
+            ).addTo(feature_group_e60b988edf29c5ca6c77a1a3c4ae4c85);
+        
+    
+        var popup_aa5fd2a006842467222b9aafbb7472c5 = L.popup({
+  "maxWidth": 350,
+});
+
+        
+            
+                var html_425f1848a2f115c677e600986b1bbcd1 = $(`<div id="html_425f1848a2f115c677e600986b1bbcd1" style="width: 100.0%; height: 100.0%;">     <b>Hostel:</b> PT_Nova<br>     <b>Nearest Health Centre:</b>     PT_kamelas medical Centre <br>     <b>Distance:</b>     0.421 km     </div>`)[0];
+                popup_aa5fd2a006842467222b9aafbb7472c5.setContent(html_425f1848a2f115c677e600986b1bbcd1);
+            
+        
+
+        poly_line_51f464807a98431c5a6be9509c1af1b7.bindPopup(popup_aa5fd2a006842467222b9aafbb7472c5)
+        ;
+
+        
+    
+    
+            poly_line_51f464807a98431c5a6be9509c1af1b7.bindTooltip(
+                `<div>
+                     PT_Nova → PT_kamelas medical Centre : 0.421 km
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_d02eac5efc1978f0f35803cc2cb17881 = L.polyline(
+                [[0.5998852025141392, 32.47985132038593], [0.6006016482800165, 32.47577335685492]],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "red", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.8, "smoothFactor": 1.0, "stroke": true, "weight": 3}
+            ).addTo(feature_group_e60b988edf29c5ca6c77a1a3c4ae4c85);
+        
+    
+        var popup_0871dd8a29e490622680bffcb7ddcde6 = L.popup({
+  "maxWidth": 350,
+});
+
+        
+            
+                var html_84bc1344e44a71985886ef8c87e2412e = $(`<div id="html_84bc1344e44a71985886ef8c87e2412e" style="width: 100.0%; height: 100.0%;">     <b>Hostel:</b> PT_ Victoria hostel <br>     <b>Nearest Health Centre:</b>     PT_kamelas medical Centre <br>     <b>Distance:</b>     0.461 km     </div>`)[0];
+                popup_0871dd8a29e490622680bffcb7ddcde6.setContent(html_84bc1344e44a71985886ef8c87e2412e);
+            
+        
+
+        poly_line_d02eac5efc1978f0f35803cc2cb17881.bindPopup(popup_0871dd8a29e490622680bffcb7ddcde6)
+        ;
+
+        
+    
+    
+            poly_line_d02eac5efc1978f0f35803cc2cb17881.bindTooltip(
+                `<div>
+                     PT_ Victoria hostel  → PT_kamelas medical Centre : 0.461 km
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_61cd29ea83e5d17f41de64369f5fa458 = L.polyline(
+                [[0.5999116878763645, 32.47981209307909], [0.6006016482800165, 32.47577335685492]],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "red", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.8, "smoothFactor": 1.0, "stroke": true, "weight": 3}
+            ).addTo(feature_group_e60b988edf29c5ca6c77a1a3c4ae4c85);
+        
+    
+        var popup_a74b60300bb4c1c4353386f299982916 = L.popup({
+  "maxWidth": 350,
+});
+
+        
+            
+                var html_e84d1763b1eeb8658bc8bd144af7d67e = $(`<div id="html_e84d1763b1eeb8658bc8bd144af7d67e" style="width: 100.0%; height: 100.0%;">     <b>Hostel:</b> PT_ city hostels<br>     <b>Nearest Health Centre:</b>     PT_kamelas medical Centre <br>     <b>Distance:</b>     0.456 km     </div>`)[0];
+                popup_a74b60300bb4c1c4353386f299982916.setContent(html_e84d1763b1eeb8658bc8bd144af7d67e);
+            
+        
+
+        poly_line_61cd29ea83e5d17f41de64369f5fa458.bindPopup(popup_a74b60300bb4c1c4353386f299982916)
+        ;
+
+        
+    
+    
+            poly_line_61cd29ea83e5d17f41de64369f5fa458.bindTooltip(
+                `<div>
+                     PT_ city hostels → PT_kamelas medical Centre : 0.456 km
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            feature_group_e60b988edf29c5ca6c77a1a3c4ae4c85.addTo(map_453ee91e4abf39e71813d780fe16bd9f);
+        
+    
+            var layer_control_a497819dbd548d85da1db787fb783422_layers = {
+                base_layers : {
+                    "Esri World Street Map" : tile_layer_e1d1cd806416ac5d7e170ab3f20c2067,
+                    "CartoDB Light Map" : tile_layer_42668e5222e11cc66427a3c28269fb7d,
+                    "Esri Satellite Imagery" : tile_layer_9c605bcf1258ca980e230259470fb62a,
+                },
+                overlays :  {
+                    "Hostels" : feature_group_e7845220f1e8ce40862474f2ae046df8,
+                    "Health Facilities" : feature_group_1494c6cca6741e5482dd19756b93679a,
+                    "Nearest Health Centre Connections" : feature_group_e60b988edf29c5ca6c77a1a3c4ae4c85,
+                },
+            };
+            let layer_control_a497819dbd548d85da1db787fb783422 = L.control.layers(
+                layer_control_a497819dbd548d85da1db787fb783422_layers.base_layers,
+                layer_control_a497819dbd548d85da1db787fb783422_layers.overlays,
+                {
+  "position": "topright",
+  "collapsed": false,
+  "autoZIndex": true,
+}
+            ).addTo(map_453ee91e4abf39e71813d780fe16bd9f);
+
+        
+    
+            var layer_control_b5ccd73e56aeacca6196993829a01b85_layers = {
+                base_layers : {
+                    "Esri World Street Map" : tile_layer_e1d1cd806416ac5d7e170ab3f20c2067,
+                    "CartoDB Light Map" : tile_layer_42668e5222e11cc66427a3c28269fb7d,
+                    "Esri Satellite Imagery" : tile_layer_9c605bcf1258ca980e230259470fb62a,
+                },
+                overlays :  {
+                    "Hostels" : feature_group_e7845220f1e8ce40862474f2ae046df8,
+                    "Health Facilities" : feature_group_1494c6cca6741e5482dd19756b93679a,
+                    "Nearest Health Centre Connections" : feature_group_e60b988edf29c5ca6c77a1a3c4ae4c85,
+                },
+            };
+            let layer_control_b5ccd73e56aeacca6196993829a01b85 = L.control.layers(
+                layer_control_b5ccd73e56aeacca6196993829a01b85_layers.base_layers,
+                layer_control_b5ccd73e56aeacca6196993829a01b85_layers.overlays,
+                {
+  "position": "topright",
+  "collapsed": false,
+  "autoZIndex": true,
+}
+            ).addTo(map_453ee91e4abf39e71813d780fe16bd9f);
+
+        
+    
+            map_453ee91e4abf39e71813d780fe16bd9f.fitBounds(
+                [[0.5998852025141392, 32.47119784355164], [0.6086967748411813, 32.47985132038593]],
+                {}
+            );
+        
+    
+            tile_layer_e1d1cd806416ac5d7e170ab3f20c2067.addTo(map_453ee91e4abf39e71813d780fe16bd9f);
+        
+    
+                marker_549011f2875d2210b86e495cf8b1b217.setIcon(icon_c3136529648e15d48fce51e86483097f);
+            
+    
+                marker_0ffedfc981c128e7b1094ac227f20f3e.setIcon(icon_cdbe2c2900f8e4f1b592d0daf5ba4b94);
+            
+    
+                marker_8a7481a7e07931b813eacb6ea06e6841.setIcon(icon_1f2b757f771d7c5254723dc32a618893);
+            
+    
+                marker_f661d4e4b5646cf46c3da1238e9da5d2.setIcon(icon_04bb868855c880c6d7c53b742664ba5d);
+            
+    
+                marker_99ba82cb047ba0a78bfc85c483aec06e.setIcon(icon_1192db6232d269fb9b47e36744363858);
+            
+    
+                marker_b2247ad29afbc6fd4836884635c1058d.setIcon(icon_e4e5227357467129e527ef8fb1a74105);
+            
+    
+                marker_879bde9631f5cc42804defe6344b2f1c.setIcon(icon_03c229e985fad3a4426e577da739cecb);
+            
+    
+                marker_34636223a512f2f88236ce6b9f2367b4.setIcon(icon_315db3f55a8da3a7fdc27f409780b8f4);
+            
+    
+                marker_a4d21a35d440155c00dba9b8bf339f21.setIcon(icon_b956eea3471d45baaeeb9e7c799d9b66);
+            
+    
+                marker_6ca411103e79d3f2bc173b7d0b8d2555.setIcon(icon_5d585f7403689de3c6fbce6f7a994c2a);
+            
+    
+                marker_00b883760892ac810561279590c9da25.setIcon(icon_10dc46a2b9342f2883169db470d736cd);
+            
+    
+                marker_69f7f51ed8e556a14aa2cbfcb94fbbe5.setIcon(icon_3e34f52d3e2bb3d718c59ed767c9a44f);
+            
+    
+            feature_group_e7845220f1e8ce40862474f2ae046df8.addTo(map_453ee91e4abf39e71813d780fe16bd9f);
+        
+    
+                marker_08016a4d205afae5feed6cc7bec1a9dd.setIcon(icon_190fd2f3c224b8c50697d29f858880ab);
+            
+    
+                marker_d601642385ba18314a5b26f66330744b.setIcon(icon_a83666badc92496250faf4b7d256ce0c);
+            
+    
+                marker_f0973fd33ba9c88887b94333dee986d3.setIcon(icon_dd4840cfe6039641ba69464766bab994);
+            
+    
+                marker_b5901ef6290b186b464c76aeb8df3023.setIcon(icon_1f04b40914ddae0bcebe3749df540ebe);
+            
+    
+                marker_91811f7345bfe85fb5c9ca8d1e3e5cba.setIcon(icon_2b6c55c056be26cd8b0f1dea6863954f);
+            
+    
+                marker_836adf1e1a33f0716f7691c3d41281b4.setIcon(icon_d54434ee7b14fb5b68bedc973ba99de7);
+            
+    
+                marker_25c8bad74f43f436467701287c81538a.setIcon(icon_74fe5701acb8c75baaccf53d42a0ae35);
+            
+    
+                marker_c03201b20e7b8948c7f87cdb540f5443.setIcon(icon_9ab401eaf71e29a46a872aa8eb1ab501);
+            
+    
+                marker_ee560af1d7a7c3b434d52443a7811781.setIcon(icon_8419e8d14c3bf30d726e8f38cf678d29);
+            
+    
+                marker_6c79e3a97c2dfca2ab468961ae195c12.setIcon(icon_231d4d3253793d759e06bcdee40326fe);
+            
+    
+                marker_18aeaff6711eede540755beed9da1547.setIcon(icon_41d6447da6f34d8f11ee9e17440a6f17);
+            
+    
+            feature_group_1494c6cca6741e5482dd19756b93679a.addTo(map_453ee91e4abf39e71813d780fe16bd9f);
+        
+    
+            feature_group_b605515f3cd86a284450ccb87dcadd81.addTo(map_453ee91e4abf39e71813d780fe16bd9f);
+        
+    
+            feature_group_e60b988edf29c5ca6c77a1a3c4ae4c85.addTo(map_453ee91e4abf39e71813d780fe16bd9f);
+        
+</script>
+</html>
